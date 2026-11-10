@@ -143,8 +143,10 @@ footer small{display:block;margin-top:28px;color:#6b7280;font-size:.75rem}
 <script src="productos.js"></script>
 <script src="carrito.js"></script>
 <script>
-
+  // Solo leemos la variable desde config.js, NO la volvemos a declarar aquí
+  const MENSAJE = "¡Hola! Vi APSHOP y quisiera hacer una consulta.";
   const waURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(MENSAJE)}`;
+  
   document.getElementById('wa-float').href = waURL;
   document.getElementById('wa-footer').href = waURL;
   document.getElementById('year').textContent = new Date().getFullYear();
