@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto — APSHOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;
+  --accent:#ff6b6b;--accent-dark:#e85555;--whatsapp:#25D366;
+  --card:#ffffff;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+.header-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.cart-link{position:relative;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;background:#111;color:#fff;font-weight:600;font-size:.9rem}
+#cart-count{background:var(--accent);border-radius:50px;padding:2px 8px;font-size:.75rem;font-weight:700;min-width:22px;text-align:center}
+
+.breadcrumb{max-width:1100px;margin:0 auto;padding:20px 20px 0;font-size:.82rem;color:var(--muted)}
+.breadcrumb a{color:var(--muted)}
+.breadcrumb a:hover{color:var(--accent)}
+.breadcrumb span{color:var(--text);font-weight:600}
+
+.detalle{max-width:1100px;margin:0 auto;padding:20px;display:grid;grid-template-columns:1fr;gap:28px}
+@media(min-width:760px){.detalle{grid-template-columns:1fr 1fr;gap:40px;padding:32px 20px 40px;align-items:start}}
+
+/* Galería */
+.galeria{display:flex;flex-direction:column;gap:12px}
+.galeria-main{border-radius:var(--radius);overflow:hidden;aspect-ratio:1/1;background:#fff;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
+.galeria-main img{width:100%;height:100%;object-fit:cover}
+.galeria-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:8rem}
+.galeria-placeholder.g1{background:linear-gradient(135deg,#ffe0e0,#ffc9c9)}
+.galeria-placeholder.g2{background:linear-gradient(135deg,#e0f0ff,#c9e2ff)}
+.galeria-placeholder.g3{background:linear-gradient(135deg,#e8ffe0,#d0ffc9)}
+.galeria-placeholder.g4{background:linear-gradient(135deg,#fff4e0,#ffe6c9)}
+.galeria-thumbs{display:flex;gap:8px;overflow-x:auto}
+.galeria-thumbs:empty{display:none}
+.thumb{flex-shrink:0;width:64px;height:64px;border-radius:10px;overflow:hidden;border:2px solid transparent;cursor:pointer;padding:0;background:#fff}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb.activo{border-color:var(--accent)}
+
+/* Info */
+.info{display:flex;flex-direction:column;gap:14px}
+.info .card-cat{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600}
+.info h1{font-size:clamp(1.5rem,4vw,2rem);font-weight:800;letter-spacing:-.5px;line-height:1.2}
+.info .price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.info .price-now{font-weight:800;font-size:1.5rem}
+.info .price-old{font-size:1rem;color:var(--muted);text-decoration:line-through}
+.info .stock{font-size:.82rem;font-weight:600;padding:4px 12px;border-radius:50px;display:inline-block;width:fit-content}
+.stock-ok{background:#dcfce7;color:#166534}
+.stock-low{background:#fef3c7;color:#92400e}
+.stock-out{background:#fee2e2;color:#991b1b}
+
+.info .descripcion{color:#374151;font-size:.95rem;line-height:1.65}
+
+.caracteristicas{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+.caracteristicas h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px;font-weight:700}
+.caracteristicas dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:.88rem}
+.caracteristicas dt{color:var(--muted);font-weight:500}
+.caracteristicas dd{font-weight:600;text-align:right}
+
+.acciones{display:flex;gap:10px;margin-top:8px}
+.cantidad-control{display:inline-flex;align-items:center;border:1.5px solid #e5e5e5;border-radius:50px;overflow:hidden;background:#fff}
+.cantidad-control button{width:40px;height:48px;border:none;background:transparent;font-family:inherit;font-size:1.2rem;font-weight:700;color:var(--text);cursor:pointer;transition:background .15s}
+.cantidad-control button:hover:not(:disabled){background:#f3f4f6}
+.cantidad-control button:disabled{color:#d1d5db;cursor:not-allowed}
+.cantidad-control input{
+  width:44px;
+  height:48px;
+  border:none;
+  text-align:center;
+  font-family:inherit;
+  font-size:.95rem;
+  font-weight:600;
+  color:var(--text);
+  background:transparent;
+  outline:none;
+  -moz-appearance:textfield;
+  appearance:textfield; /* Propiedad estándar para evitar advertencias */
+}
+.cantidad-control input::-webkit-outer-spin-button,
+.cantidad-control input::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:50px;font-family:inherit;font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:transform .1s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:#fff;flex:1}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-primary:disabled{background:#d1d5db;color:#6b7280;cursor:not-allowed}
+
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 20px;border-radius:50px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200}
+.toast.mostrar{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.back{font-size:.85rem;font-weight:600;color:var(--muted)}
+.back:hover{color:var(--accent)}
+
+/* Error */
+.estado{text-align:center;padding:80px 20px;max-width:500px;margin:0 auto}
+.estado .icono{font-size:3.5rem;margin-bottom:12px}
+.estado h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.estado p{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">AP<span>SHOP</span></a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <a href="encargos.html" class="back" style="font-size:.85rem;font-weight:600;color:var(--muted);text-decoration:none">Encargos</a>
+      <a href="carrito.html" class="cart-link" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;background:#111;color:#fff;font-weight:600;font-size:.9rem;text-decoration:none">
+        <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span id="cart-count" style="display:none">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="breadcrumb" id="breadcrumb"></div>
+<div id="contenido"></div>
+<div class="toast" id="toast"></div>
+
+<script src="productos.js"></script>
+<script src="carrito.js"></script>
+<script>
+  function errorHTML(msg) {
+    return `
+      <div class="estado">
+        <div class="icono">😕</div>
+        <h2>${msg}</h2>
+        <p>Es posible que el enlace esté roto o que el producto ya no esté disponible.</p>
+        <a href="catalogo.html" class="btn btn-primary" style="width:auto">Volver al catálogo</a>
+      </div>
+    `;
+  }
+
+  function renderGaleria(p) {
+    const main = document.getElementById('galeria-main');
+    const thumbs = document.getElementById('galeria-thumbs');
+
+    if (p.imagenes && p.imagenes.length > 0) {
+      main.innerHTML = `<img src="${p.imagenes[0]}" alt="${p.nombre}">`;
+      if (p.imagenes.length > 1) {
+        thumbs.innerHTML = p.imagenes.map((img, i) =>
+          `<button class="thumb ${i === 0 ? 'activo' : ''}" data-src="${img}"><img src="${img}" alt=""></button>`
+        ).join('');
+        thumbs.querySelectorAll('.thumb').forEach(btn => {
+          btn.addEventListener('click', () => {
+            main.innerHTML = `<img src="${btn.dataset.src}" alt="${p.nombre}">`;
+            thumbs.querySelectorAll('.thumb').forEach(b => b.classList.remove('activo'));
+            btn.classList.add('activo');
+          });
+        });
+      }
+    } else {
+      main.innerHTML = `<div class="galeria-placeholder ${p.gradiente}">${p.emoji}</div>`;
+    }
+  }
+
+  function stockHTML(p) {
+    if (p.stock === 0) return '<span class="stock stock-out">Agotado</span>';
+    if (p.stock <= 5)  return `<span class="stock stock-low">¡Últimas ${p.stock} unidades!</span>`;
+    return '<span class="stock stock-ok">Disponible</span>';
+  }
+
+  function renderProducto() {
+    const cont = document.getElementById('contenido');
+    const crumb = document.getElementById('breadcrumb');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (!id) {
+      crumb.style.display = 'none';
+      cont.innerHTML = errorHTML('Producto no especificado');
+      return;
+    }
+
+    const p = PRODUCTOS.find(x => x.id === id);
+    if (!p) {
+      crumb.style.display = 'none';
+      cont.innerHTML = errorHTML('Producto no encontrado');
+      return;
+    }
+
+    document.title = `${p.nombre} — APSHOP`;
+    crumb.innerHTML = `<a href="catalogo.html">Catálogo</a> / <a href="catalogo.html">${p.categoria}</a> / <span>${p.nombre}</span>`;
+
+    const precioHTML = p.precioAnterior
+      ? `<span class="price-now">${formatPrecio(p.precio)}</span>
+         <span class="price-old">${formatPrecio(p.precioAnterior)}</span>`
+      : `<span class="price-now">${formatPrecio(p.precio)}</span>`;
+
+    cont.innerHTML = `
+      <div class="detalle">
+        <div class="galeria">
+          <div class="galeria-main" id="galeria-main"></div>
+          <div class="galeria-thumbs" id="galeria-thumbs"></div>
+        </div>
+
+        <div class="info">
+          <div class="card-cat">${p.categoria}</div>
+          <h1>${p.nombre}</h1>
+          <div class="price">${precioHTML}</div>
+          ${stockHTML(p)}
+          <p class="descripcion">${p.descripcion || ''}</p>
+
+          <div class="caracteristicas">
+            <h3>Datos importantes</h3>
+            <dl>
+              ${(p.caracteristicas || []).map(c => `<dt>${c.label}</dt><dd>${c.valor}</dd>`).join('')}
+            </dl>
+          </div>
+
+          <div class="acciones">
+            <div class="cantidad-control">
+              <button id="qty-menos" type="button" aria-label="Quitar">−</button>
+              <input type="number" id="qty-input" value="1" min="1" max="${p.stock}" inputmode="numeric" ${p.stock === 0 ? 'disabled' : ''}>
+              <button id="qty-mas" type="button" aria-label="Añadir" ${p.stock === 0 ? 'disabled' : ''}>+</button>
+            </div>
+            ${p.stock === 0
+  ? `<a class="btn btn-primary" href="encargos.html?id=${p.id}" style="flex:1">📝 Hacer encargo</a>`
+  : `<button class="btn btn-primary" id="btn-agregar">🛒 Añadir al carrito</button>`
+}
+          </div>
+        </div>
+      </div>
+    `;
+
+    renderGaleria(p);
+
+    if (p.stock === 0) return;
+
+    const input = document.getElementById('qty-input');
+    const btnMenos = document.getElementById('qty-menos');
+    const btnMas = document.getElementById('qty-mas');
+    const btnAdd = document.getElementById('btn-agregar');
+
+    function sincronizar() {
+      let v = parseInt(input.value, 10);
+      if (isNaN(v) || v < 1) v = 1;
+      if (v > p.stock) v = p.stock;
+      input.value = v;
+      btnMenos.disabled = v <= 1;
+      btnMas.disabled = v >= p.stock;
+    }
+
+    btnMenos.addEventListener('click', () => { input.value = parseInt(input.value,10) - 1; sincronizar(); });
+    btnMas.addEventListener('click',  () => { input.value = parseInt(input.value,10) + 1; sincronizar(); });
+    input.addEventListener('input', sincronizar);
+    sincronizar();
+
+    btnAdd.addEventListener('click', () => {
+      const cantidad = parseInt(input.value, 10);
+      const ok = addAlCarrito(p.id, cantidad);
+      mostrarToast(ok ? `✅ ${cantidad} añadido${cantidad > 1 ? 's' : ''} al carrito` : '⚠️ No hay suficiente stock');
+    });
+  }
+
+  let toastTimer;
+  function mostrarToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('mostrar');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('mostrar'), 2200);
+  }
+
+  document.addEventListener('DOMContentLoaded', renderProducto);
+</script>
+</body>
+</html>

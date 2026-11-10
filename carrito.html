@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito — APSHOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;
+  --accent:#ff6b6b;--accent-dark:#e85555;--whatsapp:#25D366;
+  --card:#ffffff;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+.header-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.cart-link{position:relative;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:50px;background:#111;color:#fff;font-weight:600;font-size:.9rem}
+#cart-count{background:var(--accent);border-radius:50px;padding:2px 8px;font-size:.75rem;font-weight:700;min-width:22px;text-align:center}
+
+.page-head{max-width:800px;margin:0 auto;padding:32px 20px 8px}
+.page-head h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.page-head p{color:var(--muted);font-size:.95rem}
+
+.wrap{max-width:800px;margin:0 auto;padding:16px 20px 40px}
+
+/* Lista de items */
+.item{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px;display:flex;gap:12px;margin-bottom:12px;align-items:center}
+.item-media{width:72px;height:72px;flex-shrink:0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+.item-media.g1{background:linear-gradient(135deg,#ffe0e0,#ffc9c9)}
+.item-media.g2{background:linear-gradient(135deg,#e0f0ff,#c9e2ff)}
+.item-media.g3{background:linear-gradient(135deg,#e8ffe0,#d0ffc9)}
+.item-media.g4{background:linear-gradient(135deg,#fff4e0,#ffe6c9)}
+.item-info{flex:1;min-width:0}
+.item-cat{font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600}
+.item-title{font-size:.92rem;font-weight:600;line-height:1.3;margin-bottom:2px}
+.item-unit{font-size:.8rem;color:var(--muted)}
+.item-sub{font-weight:700;font-size:.95rem;margin-top:4px}
+.item-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+
+.qty{display:inline-flex;align-items:center;border:1.5px solid #e5e5e5;border-radius:50px;overflow:hidden}
+.qty button{width:30px;height:30px;border:none;background:#fff;font-family:inherit;font-size:1rem;font-weight:700;color:var(--text);cursor:pointer;transition:background .15s}
+.qty button:hover:not(:disabled){background:#f3f4f6}
+.qty button:disabled{color:#d1d5db;cursor:not-allowed}
+.qty span{min-width:28px;text-align:center;font-weight:600;font-size:.9rem}
+
+.btn-remove{border:none;background:none;font-size:1.1rem;cursor:pointer;color:var(--muted);padding:2px 6px;border-radius:8px;transition:background .15s,color .15s}
+.btn-remove:hover{background:#fee2e2;color:#dc2626}
+
+/* Resumen */
+.resumen{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:20px}
+.resumen-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:8px}
+.resumen-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #eee;padding-top:12px;margin-top:12px}
+.resumen-total strong{font-size:1.35rem;font-weight:800}
+.acciones{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:50px;font-family:inherit;font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:transform .1s,background .2s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:#fff;color:var(--muted);border:1.5px solid #e5e5e5}
+.btn-ghost:hover{border-color:#d1d5db;color:var(--text)}
+
+/* Estado vacío */
+.vacio{text-align:center;padding:60px 20px}
+.vacio .icono{font-size:3.5rem;margin-bottom:12px}
+.vacio h2{font-size:1.2rem;font-weight:700;margin-bottom:6px}
+.vacio p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 20px;border-radius:50px;font-size:.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200}
+.toast.mostrar{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">AP<span>SHOP</span></a>
+    <a href="carrito.html" class="cart-link">🛒 <span id="cart-count" style="display:none">0</span></a>
+  </div>
+</header>
+
+<section class="page-head">
+  <h1>Tu carrito</h1>
+  <p>Revisa tus productos antes de confirmar el pedido.</p>
+</section>
+
+<div class="wrap" id="contenido"></div>
+<div class="toast" id="toast"></div>
+
+<script src="productos.js"></script>
+<script src="carrito.js"></script>
+<script>
+  function renderCarrito() {
+    const cont = document.getElementById('contenido');
+    const carrito = getCarrito();
+
+    // Filtrar items cuyo producto ya no exista y sincronizar
+    const items = carrito
+      .map(item => {
+        const producto = PRODUCTOS.find(p => p.id === item.id);
+        return producto ? { ...item, producto } : null;
+      })
+      .filter(Boolean);
+
+    if (items.length === 0) {
+      cont.innerHTML = `
+        <div class="vacio">
+          <div class="icono">🛒</div>
+          <h2>Tu carrito está vacío</h2>
+          <p>Explora el catálogo y añade los productos que te interesen.</p>
+          <a href="catalogo.html" class="btn btn-primary">Ver catálogo</a>
+        </div>
+      `;
+      return;
+    }
+
+    const total = items.reduce((sum, i) => sum + i.producto.precio * i.cantidad, 0);
+    const totalUnidades = items.reduce((sum, i) => sum + i.cantidad, 0);
+
+    cont.innerHTML = `
+      ${items.map(i => {
+        const p = i.producto;
+        const enLimite = i.cantidad >= p.stock;
+        return `
+          <div class="item">
+            <div class="item-media ${p.gradiente}">${p.emoji}</div>
+            <div class="item-info">
+              <div class="item-cat">${p.categoria}</div>
+              <div class="item-title">${p.nombre}</div>
+              <div class="item-unit">${formatPrecio(p.precio)} c/u</div>
+              <div class="item-sub">Subtotal: ${formatPrecio(p.precio * i.cantidad)}</div>
+            </div>
+            <div class="item-right">
+              <button class="btn-remove" data-remove="${p.id}" aria-label="Eliminar">🗑️</button>
+              <div class="qty">
+                <button data-qty="${p.id}" data-delta="-1">−</button>
+                <span>${i.cantidad}</span>
+                <button data-qty="${p.id}" data-delta="1" ${enLimite ? 'disabled' : ''}>+</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+
+      <div class="resumen">
+        <div class="resumen-row">
+          <span>Productos (${totalUnidades} ${totalUnidades === 1 ? 'unidad' : 'unidades'})</span>
+          <span>${formatPrecio(total)}</span>
+        </div>
+        <div class="resumen-row">
+          <span>Envío</span>
+          <span>A coordinar por WhatsApp</span>
+        </div>
+        <div class="resumen-total">
+          <span>Total</span>
+          <strong>${formatPrecio(total)}</strong>
+        </div>
+        <div class="acciones">
+          <a href="checkout.html" class="btn btn-primary">Confirmar pedido →</a>
+          <button class="btn btn-ghost" id="btn-vaciar">Vaciar carrito</button>
+        </div>
+      </div>
+    `;
+
+    // Eventos
+    cont.querySelectorAll('[data-qty]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.qty;
+        const delta = parseInt(btn.dataset.delta, 10);
+        const item = getCarrito().find(i => i.id === id);
+        if (!item) return;
+        cambiarCantidad(id, item.cantidad + delta);
+        renderCarrito();
+      });
+    });
+
+    cont.querySelectorAll('[data-remove]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        quitarDelCarrito(btn.dataset.remove);
+        mostrarToast('Producto eliminado');
+        renderCarrito();
+      });
+    });
+
+    document.getElementById('btn-vaciar').addEventListener('click', () => {
+      if (!confirm('¿Vaciar el carrito completo?')) return;
+      setCarrito([]);
+      renderCarrito();
+    });
+  }
+
+  let toastTimer;
+  function mostrarToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('mostrar');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('mostrar'), 1800);
+  }
+
+  document.addEventListener('DOMContentLoaded', renderCarrito);
+</script>
+</body>
+</html>

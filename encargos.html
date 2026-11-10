@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encargos — APSHOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa;--text:#1a1a1a;--muted:#6b7280;
+  --accent:#ff6b6b;--accent-dark:#e85555;--whatsapp:#25D366;
+  --card:#ffffff;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+.header-inner{max-width:800px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.back{font-size:.85rem;font-weight:600;color:var(--muted)}
+.back:hover{color:var(--accent)}
+
+.page-head{max-width:800px;margin:0 auto;padding:32px 20px 8px}
+.page-head h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.page-head p{color:var(--muted);font-size:.95rem}
+
+.wrap{max-width:800px;margin:0 auto;padding:16px 20px 40px;display:flex;flex-direction:column;gap:16px}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.card h2{font-size:1.05rem;font-weight:700;margin-bottom:14px;letter-spacing:-.3px}
+
+.campo{margin-bottom:14px}
+.campo:last-child{margin-bottom:0}
+.campo label{display:block;font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:6px}
+.campo label .opt{color:var(--muted);font-weight:500;font-size:.75rem}
+.campo input,.campo textarea,.campo select{width:100%;padding:12px 14px;border:1.5px solid #e5e5e5;border-radius:12px;font-family:inherit;font-size:.92rem;color:var(--text);background:#fff;transition:border-color .15s,box-shadow .15s}
+.campo input:focus,.campo textarea:focus,.campo select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,107,107,.15)}
+.campo textarea{resize:vertical;min-height:90px}
+.campo select{cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.campo .hint{font-size:.75rem;color:var(--muted);margin-top:4px}
+
+/* Aviso de producto precargado */
+.precarga{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff5f5;border:1.5px solid #ffe0e0;border-radius:12px;margin-bottom:14px}
+.precarga-media{width:48px;height:48px;flex-shrink:0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.precarga-media.g1{background:linear-gradient(135deg,#ffe0e0,#ffc9c9)}
+.precarga-media.g2{background:linear-gradient(135deg,#e0f0ff,#c9e2ff)}
+.precarga-media.g3{background:linear-gradient(135deg,#e8ffe0,#d0ffc9)}
+.precarga-media.g4{background:linear-gradient(135deg,#fff4e0,#ffe6c9)}
+.precarga-info{flex:1;min-width:0}
+.precarga-cat{font-size:.68rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600}
+.precarga-nombre{font-size:.9rem;font-weight:600;line-height:1.3}
+.precarga-quitar{border:none;background:none;font-size:1.1rem;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:8px;transition:background .15s,color .15s}
+.precarga-quitar:hover{background:#fee2e2;color:#dc2626}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 24px;border-radius:50px;font-family:inherit;font-weight:600;font-size:.95rem;border:none;cursor:pointer;transition:transform .1s,background .2s;width:100%}
+.btn:active{transform:scale(.98)}
+.btn-wa{background:var(--whatsapp);color:#fff}
+.btn-wa:hover{background:#1eb85a}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-ghost{background:#fff;color:var(--muted);border:1.5px solid #e5e5e5}
+.btn-ghost:hover{border-color:#d1d5db;color:var(--text)}
+
+.aviso{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
+
+.estado{text-align:center;padding:60px 20px}
+.estado .icono{font-size:3.5rem;margin-bottom:12px}
+.estado h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.estado p{color:var(--muted);font-size:.9rem;max-width:400px;margin:0 auto 22px}
+.estado .btn{margin:0 auto 10px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">AP<span>SHOP</span></a>
+    <a href="catalogo.html" class="back">← Volver al catálogo</a>
+  </div>
+</header>
+
+<section class="page-head">
+  <h1>Hacer un encargo</h1>
+  <p>¿No encuentras lo que buscas o está agotado? Cuéntanos qué necesitas y te avisamos por WhatsApp con disponibilidad, precio y tiempo de entrega.</p>
+</section>
+
+<div class="wrap" id="contenido"></div>
+
+<script src="config.js"></script>
+<script src="productos.js"></script>
+<script src="carrito.js"></script>
+<script>
+
+  // Estado del producto precargado (si viene ?id=pXXX)
+  let productoPrecargado = null;
+
+  function renderFormulario() {
+    const cont = document.getElementById('contenido');
+
+    cont.innerHTML = `
+      <form id="form-encargo" novalidate>
+        <div class="card">
+          <h2>Tus datos</h2>
+          <div class="campo">
+            <label for="nombre">Nombre completo *</label>
+            <input type="text" id="nombre" name="nombre" required minlength="3" placeholder="Ej. Juan Pérez" autocomplete="name">
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{8}" inputmode="numeric" maxlength="8" placeholder="88887777" autocomplete="tel">
+            <div class="hint">8 dígitos, sin guiones ni espacios.</div>
+          </div>
+          <div class="campo">
+            <label for="correo">Correo electrónico <span class="opt">(opcional)</span></label>
+            <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h2>Producto que buscas</h2>
+
+          <div id="zona-precarga"></div>
+
+          <div class="campo">
+            <label for="categoria">Categoría *</label>
+            <select id="categoria" name="categoria" required>
+              <option value="">Selecciona una categoría</option>
+              ${CATEGORIAS_ENCARGO.map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="campo">
+            <label for="producto">Descripción del producto *</label>
+            <textarea id="producto" name="producto" required minlength="5" placeholder="Ej. Audífonos inalámbricos negros, con estuche de carga, marca similar a la del catálogo."></textarea>
+            <div class="hint">Cuanto más detalle nos des, mejor te podemos ayudar.</div>
+          </div>
+          <div class="campo">
+            <label for="cantidad">Cantidad aproximada <span class="opt">(opcional)</span></label>
+            <input type="number" id="cantidad" name="cantidad" min="1" max="99" inputmode="numeric" placeholder="1">
+          </div>
+          <div class="campo">
+            <label for="notas">Notas adicionales <span class="opt">(opcional)</span></label>
+            <textarea id="notas" name="notas" placeholder="Color preferido, talla, presupuesto, urgencia, etc."></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <button type="submit" class="btn btn-wa">
+            📲 Enviar solicitud por WhatsApp
+          </button>
+          <p class="aviso">Al confirmar se abrirá WhatsApp con tu solicitud. Solo debes pulsar <strong>Enviar</strong> dentro de la conversación.</p>
+        </div>
+      </form>
+    `;
+
+    // Si viene producto precargado por query param
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (id) {
+      const p = PRODUCTOS.find(x => x.id === id);
+      if (p) {
+        productoPrecargado = p;
+        document.getElementById('categoria').value = p.categoria;
+        document.getElementById('producto').value = p.nombre + '.';
+        renderPrecarga();
+      }
+    }
+
+    document.getElementById('form-encargo').addEventListener('submit', enviarEncargo);
+  }
+
+  function renderPrecarga() {
+    const zona = document.getElementById('zona-precarga');
+    if (!productoPrecargado) { zona.innerHTML = ''; return; }
+    const p = productoPrecargado;
+    zona.innerHTML = `
+      <div class="precarga">
+        <div class="precarga-media ${p.gradiente}">${p.emoji}</div>
+        <div class="precarga-info">
+          <div class="precarga-cat">${p.categoria}${p.stock === 0 ? ' · Agotado' : ''}</div>
+          <div class="precarga-nombre">${p.nombre}</div>
+        </div>
+        <button type="button" class="precarga-quitar" id="quitar-precarga" aria-label="Quitar">✕</button>
+      </div>
+    `;
+    document.getElementById('quitar-precarga').addEventListener('click', () => {
+      productoPrecargado = null;
+      document.getElementById('producto').value = '';
+      document.getElementById('categoria').value = '';
+      renderPrecarga();
+    });
+  }
+
+  function enviarEncargo(e) {
+    e.preventDefault();
+    const form = e.target;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const datos = {
+      nombre:    form.nombre.value.trim(),
+      telefono:  form.telefono.value.trim(),
+      correo:    form.correo.value.trim(),
+      categoria: form.categoria.value,
+      producto:  form.producto.value.trim(),
+      cantidad:  form.cantidad.value.trim(),
+      notas:     form.notas.value.trim()
+    };
+
+    const lineas = [];
+    lineas.push('📝 *SOLICITUD DE ENCARGO — APSHOP*');
+    lineas.push('');
+    lineas.push('👤 *Nombre:* ' + datos.nombre);
+    lineas.push('📱 *Teléfono:* ' + datos.telefono);
+    if (datos.correo) lineas.push('📧 *Correo:* ' + datos.correo);
+    lineas.push('');
+    lineas.push('*PRODUCTO BUSCADO:*');
+    lineas.push('📂 *Categoría:* ' + datos.categoria);
+    if (productoPrecargado) {
+      lineas.push('🔖 *Referencia:* ' + productoPrecargado.nombre + ' (del catálogo)');
+    }
+    lineas.push('🛍️ *Descripción:* ' + datos.producto);
+    if (datos.cantidad) lineas.push('🔢 *Cantidad:* ' + datos.cantidad);
+    if (datos.notas) lineas.push('📝 *Notas:* ' + datos.notas);
+
+    const mensaje = lineas.join('\n');
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+    sessionStorage.setItem('ultimoEncargoURL', url);
+
+    window.open(url, '_blank');
+
+    mostrarConfirmacion();
+  }
+
+  function mostrarConfirmacion() {
+    const url = sessionStorage.getItem('ultimoEncargoURL') || '#';
+    const cont = document.getElementById('contenido');
+    cont.innerHTML = `
+      <div class="card estado">
+        <div class="icono">✅</div>
+        <h2>¡Solicitud generada!</h2>
+        <p>Se abrió WhatsApp con tu solicitud de encargo. Solo debes pulsar <strong>Enviar</strong> dentro de la conversación para que la recibamos. Si no se abrió, usa el botón de abajo.</p>
+        <a href="${url}" target="_blank" rel="noopener" class="btn btn-wa">📲 Abrir WhatsApp de nuevo</a>
+        <a href="catalogo.html" class="btn btn-ghost">Volver al catálogo</a>
+      </div>
+    `;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', renderFormulario);
+</script>
+</body>
+</html>
