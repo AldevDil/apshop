@@ -1,2 +1,2 @@
 # apshop
-tienda de artículos varios y pedidos por encargo
+tienda de artículos varios y pedidos
