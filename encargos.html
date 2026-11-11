@@ -12,6 +12,15 @@
   --accent:#ff6b6b;--accent-dark:#e85555;--whatsapp:#25D366;
   --card:#ffffff;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,.08);
 }
+
+[data-theme="dark"] {
+  --bg: #111827;           /* Fondo general oscuro */
+  --text: #f3f4f6;         /* Texto claro */
+  --muted: #9ca3af;        /* Texto grisáceo */
+  --card: #1f2937;         /* Fondo de las tarjetas */
+  --shadow: 0 4px 20px rgba(0,0,0,0.4); /* Sombra más profunda */
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
@@ -67,6 +76,29 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
 
 .aviso{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 
+[data-theme="dark"] header {
+  background: rgba(17, 24, 39, 0.85);
+  border-bottom: 1px solid #374151;
+}
+[data-theme="dark"] .campo input,
+[data-theme="dark"] .campo textarea,
+[data-theme="dark"] .campo select,
+[data-theme="dark"] .qty button,
+[data-theme="dark"] .cantidad-control button {
+  background: #374151;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+[data-theme="dark"] .filtro-btn {
+  background: #1f2937;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+[data-theme="dark"] .filtro-btn.activo {
+  background: var(--accent);
+  color: #fff;
+}
+
 .estado{text-align:center;padding:60px 20px}
 .estado .icono{font-size:3.5rem;margin-bottom:12px}
 .estado h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
@@ -86,6 +118,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
         <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <span id="cart-count" style="display:none">0</span>
       </a>
+      <button id="theme-toggle" style="background:none; border:none; font-size:1.2rem; cursor:pointer; padding:4px;" aria-label="Cambiar tema">🌙</button>
     </div>
   </div>
 </header>
@@ -264,4 +297,5 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
   document.addEventListener('DOMContentLoaded', renderFormulario);
 </script>
 </body>
+<script src="tema.js"></script>
 </html>

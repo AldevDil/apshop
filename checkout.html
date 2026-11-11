@@ -12,6 +12,15 @@
   --accent:#ff6b6b;--accent-dark:#e85555;--whatsapp:#25D366;
   --card:#ffffff;--radius:16px;--shadow:0 4px 20px rgba(0,0,0,.08);
 }
+
+[data-theme="dark"] {
+  --bg: #111827;           /* Fondo general oscuro */
+  --text: #f3f4f6;         /* Texto claro */
+  --muted: #9ca3af;        /* Texto grisáceo */
+  --card: #1f2937;         /* Fondo de las tarjetas */
+  --shadow: 0 4px 20px rgba(0,0,0,0.4); /* Sombra más profunda */
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
@@ -124,6 +133,29 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
 
 .aviso{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 
+[data-theme="dark"] header {
+  background: rgba(17, 24, 39, 0.85);
+  border-bottom: 1px solid #374151;
+}
+[data-theme="dark"] .campo input,
+[data-theme="dark"] .campo textarea,
+[data-theme="dark"] .campo select,
+[data-theme="dark"] .qty button,
+[data-theme="dark"] .cantidad-control button {
+  background: #374151;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+[data-theme="dark"] .filtro-btn {
+  background: #1f2937;
+  color: #f3f4f6;
+  border-color: #4b5563;
+}
+[data-theme="dark"] .filtro-btn.activo {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* Confirmación / vacío */
 .estado{text-align:center;padding:60px 20px}
 .estado .icono{font-size:3.5rem;margin-bottom:12px}
@@ -138,6 +170,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
   <div class="header-inner">
     <a href="index.html" class="logo">AP<span>SHOP</span></a>
     <a href="carrito.html" class="back">← Volver al carrito</a>
+    <button id="theme-toggle" style="background:none; border:none; font-size:1.2rem; cursor:pointer; padding:4px;" aria-label="Cambiar tema">🌙</button>
   </div>
 </header>
 
@@ -389,4 +422,5 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdro
   document.addEventListener('DOMContentLoaded', renderCheckout);
 </script>
 </body>
+<script src="tema.js"></script>
 </html>
